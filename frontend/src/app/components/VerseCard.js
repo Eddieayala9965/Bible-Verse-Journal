@@ -1,7 +1,7 @@
 "use client";
 import { use, useEffect, useState } from "react";
 
-const VerseCard = ({ reference = "john 3:16" }) => {
+const VerseCard = ({ reference }) => {
   const [verse, setVerse] = useState(null);
   const [loading, setLoading] = useState(true);
 
@@ -12,6 +12,7 @@ const VerseCard = ({ reference = "john 3:16" }) => {
           `https://bible-api.com/${encodeURIComponent(reference)}`
         );
         const data = await response.json();
+        console.log(data);
         setVerse(data);
       } catch (error) {
         console.error("Failed to fetch verse", error);

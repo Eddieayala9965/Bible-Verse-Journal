@@ -1,9 +1,11 @@
 import VerseCard from "./components/VerseCard";
 
-export default function Home() {
+const Home = () => {
   return (
     <main>
-      <VerseCard reference="psalm 23:1" />
+      <VerseCard reference="proverbs 3:5-8" />
     </main>
   );
-}
+};
+
+export default Home;
