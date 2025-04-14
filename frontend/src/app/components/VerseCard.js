@@ -1,9 +1,11 @@
 "use client";
-import { use, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
+import JournalForm from "./JournalForm";
 
 const VerseCard = ({ reference }) => {
   const [verse, setVerse] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [showForm, setShowForm] = useState(false); // NEW
 
   useEffect(() => {
     const fetchVerse = async () => {
@@ -23,9 +25,13 @@ const VerseCard = ({ reference }) => {
     fetchVerse();
   }, [reference]);
 
+  const handleSave = (entry) => {
+    console.log("📝 Submitting to backend:", entry);
+  };
+
   if (loading) {
     return (
-      <div className=" flex justify-center mt-10 py-8">
+      <div className="flex justify-center mt-10 py-8">
         <div className="flex space-x-1">
           <div
             className="w-2 h-2 bg-blue-500 rounded-full animate-bounce"
@@ -43,9 +49,10 @@ const VerseCard = ({ reference }) => {
       </div>
     );
   }
+
   return (
-    <div className="bg-gradient-to-br from-slate-50 to-blue-50 py-10 px-4 flex justify-center items-center">
-      <div className="bg-white shadow-lg rounded-2xl p-8 border border-slate-100 max-w-xl mx-auto relative overflow-hidden">
+    <div className="bg-gradient-to-br from-slate-50 to-blue-50 py-10 px-4 flex flex-col items-center">
+      <div className="bg-white shadow-lg rounded-2xl p-8 border border-slate-100 max-w-xl w-full relative overflow-hidden">
         <div className="absolute -top-10 -right-10 w-20 h-20 bg-blue-500 opacity-10 rounded-full" />
         <div className="absolute -bottom-10 -left-10 w-20 h-20 bg-blue-500 opacity-10 rounded-full" />
 
@@ -71,7 +78,7 @@ const VerseCard = ({ reference }) => {
           </p>
           <button
             className="group bg-blue-600 hover:bg-blue-700 text-white px-5 py-2.5 rounded-lg transition-all duration-200 flex items-center gap-2 shadow-sm hover:shadow"
-            onClick={() => alert("Coming soon: Save to journal")}
+            onClick={() => setShowForm((prev) => !prev)}
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -81,10 +88,23 @@ const VerseCard = ({ reference }) => {
             >
               <path d="M5 4a2 2 0 012-2h6a2 2 0 012 2v14l-5-2.5L5 18V4z" />
             </svg>
-            <span>Save to Journal</span>
+            <span>{showForm ? "Cancel" : "Save to Journal"}</span>
           </button>
         </div>
       </div>
+
+      {showForm && (
+        <div className="mt-6 w-full max-w-xl">
+          <JournalForm
+            verse={{
+              reference: verse.reference,
+              text: verse.text,
+              translation: verse.translation_name,
+            }}
+            onSubmit={handleSave}
+          />
+        </div>
+      )}
     </div>
   );
 };
