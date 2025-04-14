@@ -25,7 +25,7 @@ const VerseCard = ({ reference }) => {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-slate-50 flex justify-center items-center">
+      <div className=" flex justify-center mt-10 py-8">
         <div className="flex space-x-1">
           <div
             className="w-2 h-2 bg-blue-500 rounded-full animate-bounce"
@@ -44,7 +44,7 @@ const VerseCard = ({ reference }) => {
     );
   }
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50 py-10 px-4 flex justify-center items-center">
+    <div className="bg-gradient-to-br from-slate-50 to-blue-50 py-10 px-4 flex justify-center items-center">
       <div className="bg-white shadow-lg rounded-2xl p-8 border border-slate-100 max-w-xl mx-auto relative overflow-hidden">
         <div className="absolute -top-10 -right-10 w-20 h-20 bg-blue-500 opacity-10 rounded-full" />
         <div className="absolute -bottom-10 -left-10 w-20 h-20 bg-blue-500 opacity-10 rounded-full" />
