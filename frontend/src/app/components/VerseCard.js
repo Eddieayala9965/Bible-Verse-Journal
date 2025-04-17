@@ -11,7 +11,9 @@ const VerseCard = ({ reference }) => {
     const fetchVerse = async () => {
       try {
         const response = await fetch(
-          `https://bible-api.com/${encodeURIComponent(reference)}`
+          `https://bible-api.com/${encodeURIComponent(
+            reference
+          )}?translation=kjv`
         );
         const data = await response.json();
         console.log(data);
