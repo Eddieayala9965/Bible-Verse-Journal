@@ -3,12 +3,12 @@ from pydantic import BaseModel
 # USERS
 
 class UserCreate(BaseModel):
-    username: str
+    username: str | None = None
     email: str
     password: str
 
 class UserLogin(BaseModel):
-    username: str
+    email: str
     password: str
 
 class UserUpdate(BaseModel):
@@ -16,6 +16,17 @@ class UserUpdate(BaseModel):
     email: str | None = None
     password: str | None = None
 
+class UserResponse(BaseModel):
+    id: int
+    username: str | None = None
+    email: str
+
+    class Config:
+        from_attributes = True
+
+class Token(BaseModel):
+    access_token: str
+    token_type: str
 
 # JOURNAL ENTRIES
 
