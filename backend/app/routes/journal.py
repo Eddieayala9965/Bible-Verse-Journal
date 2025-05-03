@@ -59,11 +59,13 @@ def update_entry(entry_id: int, updated: JournalUpdate, db: Session = Depends(ge
     if not entry:
         raise HTTPException(status_code=404, detail="Entry not found")
 
-    for field, value in updated.dict(exclude_unset=True).items():
-        setattr(entry, field, value)
-
-    db.commit()
-    db.refresh(entry)
+   
+    if updated.notes is not None:
+        entry.notes = updated.notes
+        db.commit()
+        db.refresh(entry)
+        return entry
+    
     return entry
 
 @router.delete("/journal/{entry_id}")
