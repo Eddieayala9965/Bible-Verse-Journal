@@ -4,7 +4,7 @@ import VerseCard from "../components/VerseCard";
 import SearchVerse from "../components/SearchVerse";
 import Header from "../components/Header";
 
-export default function SearchPage() {
+const SearchPage = () => {
   const [reference, setReference] = useState("john 3:16");
 
   return (
@@ -18,4 +18,6 @@ export default function SearchPage() {
       </main>
     </div>
   );
-}
+};
+
+export default SearchPage;

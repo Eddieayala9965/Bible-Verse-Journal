@@ -4,13 +4,14 @@ import { useRouter } from "next/navigation";
 import Header from "../components/Header";
 import { registerUser } from "../lib/api";
 
-export default function SignUpPage() {
+const SignUpPage = () => {
   const router = useRouter();
   const [formData, setFormData] = useState({
     username: "",
     email: "",
     password: "",
   });
+
   const [confirmPassword, setConfirmPassword] = useState("");
   const [error, setError] = useState("");
   const [passwordError, setPasswordError] = useState("");
@@ -167,4 +168,6 @@ export default function SignUpPage() {
       </main>
     </div>
   );
-}
+};
+
+export default SignUpPage;

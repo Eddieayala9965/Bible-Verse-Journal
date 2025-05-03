@@ -4,7 +4,7 @@ import { useRouter } from "next/navigation";
 import Header from "../components/Header";
 import { loginUser } from "../lib/api";
 
-export default function SignInPage() {
+const SignInPage = () => {
   const router = useRouter();
   const [formData, setFormData] = useState({
     email: "",
@@ -93,4 +93,6 @@ export default function SignInPage() {
       </main>
     </div>
   );
-}
+};
+
+export default SignInPage;
