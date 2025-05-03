@@ -1,17 +1,9 @@
 "use client";
 import Link from "next/link";
-import { useState } from "react";
-import { useRouter } from "next/navigation";
+import { useAuth } from "../context/AuthContext";
 
 export default function Header() {
-  const router = useRouter();
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-
-  const handleSignOut = () => {
-    document.cookie = "auth=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
-    setIsLoggedIn(false);
-    router.push("/");
-  };
+  const { isAuthenticated, logout } = useAuth();
 
   return (
     <header className="bg-white shadow-sm">
@@ -23,31 +15,33 @@ export default function Header() {
                 Bible Verse Journal
               </Link>
             </div>
-            <div className="hidden sm:ml-6 sm:flex sm:space-x-8">
-              <Link
-                href="/"
-                className="border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium"
-              >
-                Home
-              </Link>
-              <Link
-                href="/search"
-                className="border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium"
-              >
-                Search
-              </Link>
-              <Link
-                href="/journal"
-                className="border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium"
-              >
-                Journal
-              </Link>
-            </div>
+            {isAuthenticated && (
+              <div className="hidden sm:ml-6 sm:flex sm:space-x-8">
+                <Link
+                  href="/"
+                  className="border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium"
+                >
+                  Home
+                </Link>
+                <Link
+                  href="/search"
+                  className="border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium"
+                >
+                  Search
+                </Link>
+                <Link
+                  href="/journal"
+                  className="border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium"
+                >
+                  Journal
+                </Link>
+              </div>
+            )}
           </div>
           <div className="flex items-center">
-            {isLoggedIn ? (
+            {isAuthenticated ? (
               <button
-                onClick={handleSignOut}
+                onClick={logout}
                 className="ml-4 px-4 py-2 text-sm font-medium text-white bg-red-600 rounded-md hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500"
               >
                 Sign Out

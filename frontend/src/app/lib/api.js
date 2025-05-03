@@ -11,9 +11,18 @@ const API = axios.create({
 
 API.interceptors.request.use(
   (config) => {
+    const cookies = document.cookie.split(";");
+    const authCookie = cookies.find((cookie) =>
+      cookie.trim().startsWith("auth=")
+    );
+    if (authCookie) {
+      const token = authCookie.split("=")[1];
+      config.headers.Authorization = `Bearer ${token}`;
+    }
     return config;
   },
   (error) => {
+    console.error("Request error:", error);
     return Promise.reject(error);
   }
 );
@@ -22,11 +31,15 @@ API.interceptors.response.use(
   (response) => response,
   (error) => {
     if (error.response) {
-      console.error("API Error:", error.response.data);
+      console.error("API Error Response:", {
+        status: error.response.status,
+        data: error.response.data,
+        headers: error.response.headers,
+      });
     } else if (error.request) {
       console.error("No response received:", error.request);
     } else {
-      console.error("Error setting up request:", error.message);
+      console.error("Request setup error:", error.message);
     }
     return Promise.reject(error);
   }
