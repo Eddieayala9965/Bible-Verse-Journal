@@ -78,7 +78,7 @@ function SignUpForm() {
       <main className="py-8 px-4">
         <div className="max-w-md mx-auto bg-white p-8 rounded-lg shadow-sm relative">
           {showSuccess && (
-            <div className="absolute inset-0 bg-white bg-opacity-90 flex items-center justify-center rounded-lg">
+            <div className="absolute inset-0 bg-white bg-opacity-90 flex items-center justify-center rounded-lg z-50">
               <div className="text-center">
                 <div className="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
                   <svg

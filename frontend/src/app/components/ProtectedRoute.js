@@ -1,21 +1,26 @@
 "use client";
 import { useEffect } from "react";
-import { useRouter } from "next/navigation";
+import { useRouter, usePathname } from "next/navigation";
 import { useAuth } from "../context/AuthContext";
 
-export default function ProtectedRoute({ children, requireAuth = true }) {
+export default function ProtectedRoute({ children }) {
   const { isAuthenticated, isLoading } = useAuth();
   const router = useRouter();
+  const pathname = usePathname();
+
+  const publicRoutes = ["/", "/signin", "/signup"];
 
   useEffect(() => {
     if (!isLoading) {
-      if (requireAuth && !isAuthenticated) {
+      const isPublicRoute = publicRoutes.includes(pathname);
+
+      if (!isPublicRoute && !isAuthenticated) {
         router.push("/signin");
-      } else if (!requireAuth && isAuthenticated) {
+      } else if (isPublicRoute && isAuthenticated && pathname !== "/") {
         router.push("/");
       }
     }
-  }, [isAuthenticated, isLoading, requireAuth, router]);
+  }, [isAuthenticated, isLoading, pathname, router]);
 
   if (isLoading) {
     return (
@@ -25,7 +30,11 @@ export default function ProtectedRoute({ children, requireAuth = true }) {
     );
   }
 
-  if ((requireAuth && !isAuthenticated) || (!requireAuth && isAuthenticated)) {
+  const isPublicRoute = publicRoutes.includes(pathname);
+  if (
+    (!isPublicRoute && !isAuthenticated) ||
+    (isPublicRoute && isAuthenticated && pathname !== "/")
+  ) {
     return null;
   }
 

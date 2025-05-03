@@ -31,12 +31,11 @@ function SignInForm() {
         setIsLoading(false);
         setTimeout(() => {
           router.push("/");
-        }, 1500);
+        }, 2500);
       }
     } catch (err) {
       console.error("Login error:", err);
       if (err.response) {
-        // Server responded with an error
         if (err.response.status === 422) {
           setError("Invalid email or password");
         } else if (err.response.data?.detail) {
@@ -45,10 +44,8 @@ function SignInForm() {
           setError("An error occurred during login");
         }
       } else if (err.request) {
-        // Request was made but no response received
         setError("Unable to connect to the server. Please try again later.");
       } else {
-        // Something else went wrong
         setError("An unexpected error occurred. Please try again.");
       }
       setIsLoading(false);
@@ -61,7 +58,7 @@ function SignInForm() {
       <main className="py-8 px-4">
         <div className="max-w-md mx-auto bg-white p-8 rounded-lg shadow-sm relative">
           {showSuccess && (
-            <div className="absolute inset-0 bg-white bg-opacity-90 flex items-center justify-center rounded-lg">
+            <div className="absolute inset-0 bg-white bg-opacity-90 flex items-center justify-center rounded-lg z-50">
               <div className="text-center">
                 <div className="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
                   <svg
